@@ -128,7 +128,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
-      <div className="flex-grow pt-28 pb-12 px-4 md:px-8 container mx-auto max-w-5xl">
+      <div className="flex-grow pt-32 pb-12 px-4 md:px-8 container mx-auto max-w-5xl">
         <div className="flex justify-between items-center mb-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div>
             <h1 className="text-3xl font-bold text-clinic-dark">Dashboard</h1>

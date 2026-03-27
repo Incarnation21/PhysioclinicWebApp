@@ -47,7 +47,7 @@ const AdminLogin = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
-      <div className="flex-grow flex items-center justify-center pt-24 pb-12">
+      <div className="flex-grow flex items-center justify-center pt-32 pb-12">
         <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-100">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-clinic-primary">Admin Login</h2>

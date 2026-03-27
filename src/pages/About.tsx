@@ -9,7 +9,7 @@ const About = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-clinic-primary text-white py-16">
+      <section className="bg-clinic-primary text-white pt-32 pb-16">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">About Us</h1>
           <p className="text-lg max-w-3xl mx-auto opacity-90">
@@ -131,13 +131,12 @@ const About = () => {
               <div className="space-y-2">
                 <p className="text-gray-700"><strong>Address:</strong> J-39, PC Colony, Kankarbagh, Patna, Bihar 800020, India</p>
                 <p className="text-gray-700"><strong>Phone:</strong> 8252482702</p>
-                <p className="text-gray-700"><strong>Email:</strong> contact@drriddhikaphysio.com</p>
+                <p className="text-gray-700"><strong>Email:</strong> drriddhikapt@gmail.com</p>
               </div>
               <div className="space-y-2">
                 <p className="text-gray-700"><strong>Clinic Hours:</strong></p>
-                <p className="text-gray-700">Monday - Friday: 9:00 AM - 8:00 PM</p>
-                <p className="text-gray-700">Saturday: 9:00 AM - 6:00 PM</p>
-                <p className="text-gray-700">Sunday: 10:00 AM - 2:00 PM</p>
+                <p className="text-gray-700">Monday - Saturday: 7:00 AM - 8:00 PM</p>
+                <p className="text-gray-700">Sunday: 7:00 AM - 4:00 PM</p>
               </div>
             </div>
             <div>
