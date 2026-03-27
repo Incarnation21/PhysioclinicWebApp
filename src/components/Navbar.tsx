@@ -40,10 +40,8 @@ const Navbar = () => {
   return (
     <nav
       className={cn(
-        "fixed w-full z-50 transition-all duration-300",
-        isScrolled
-          ? "glass py-2"
-          : "bg-transparent py-4"
+        "fixed w-full z-50 transition-all duration-300 glass",
+        isScrolled ? "py-2" : "py-4"
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
@@ -54,10 +52,10 @@ const Navbar = () => {
               <img src="/logo2.png" alt="Dr.Riddhika's Physiotherapy Clinic Logo" className="w-full h-full object-contain drop-shadow-md scale-110" />
             </div>
             <div className="flex flex-col">
-              <span className={cn("font-bold text-lg leading-tight transition-colors", isScrolled ? "text-clinic-dark" : "text-clinic-primary md:text-white")}>
+              <span className="font-bold text-lg leading-tight transition-colors text-clinic-dark">
                 Dr.Riddhika's
               </span>
-              <span className={cn("text-xs transition-colors font-medium", isScrolled ? "text-clinic-text" : "text-clinic-accent/90 md:text-gray-100")}>
+              <span className="text-xs transition-colors font-medium text-clinic-text">
                 Physiotherapy Clinic
               </span>
             </div>
@@ -73,14 +71,17 @@ const Navbar = () => {
                   "text-sm font-medium transition-colors hover:text-clinic-secondary relative group",
                   location.pathname === link.path
                     ? "text-clinic-secondary"
-                    : (isScrolled ? "text-gray-700" : "text-white/90")
+                    : "text-gray-700",
+                  link.name === "Doc.Door" && "text-clinic-primary font-bold"
                 )}
               >
                 {link.name}
-                <span className={cn(
-                  "absolute -bottom-1 left-0 w-0 h-0.5 bg-clinic-secondary transition-all duration-300 group-hover:w-full",
-                  location.pathname === link.path ? "w-full" : ""
-                )} />
+                {link.name !== "Doc.Door" && (
+                  <span className={cn(
+                    "absolute -bottom-1 left-0 w-0 h-0.5 bg-clinic-secondary transition-all duration-300 group-hover:w-full",
+                    location.pathname === link.path ? "w-full" : ""
+                  )} />
+                )}
               </Link>
             ))}
             <Button
@@ -99,7 +100,7 @@ const Navbar = () => {
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} className={isScrolled ? "text-clinic-primary" : "text-white"} />}
+            {isOpen ? <X size={28} /> : <Menu size={28} className="text-clinic-primary" />}
           </button>
         </div>
       </div>
@@ -120,7 +121,8 @@ const Navbar = () => {
                 to={link.path}
                 className={cn(
                   "text-2xl font-semibold transition-colors hover:text-clinic-primary",
-                  location.pathname === link.path ? "text-clinic-primary" : "text-gray-800"
+                  location.pathname === link.path ? "text-clinic-primary" : "text-gray-800",
+                  link.name === "Doc.Door" && "text-clinic-primary font-bold"
                 )}
                 onClick={() => setIsOpen(false)}
               >

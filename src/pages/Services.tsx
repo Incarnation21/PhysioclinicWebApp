@@ -7,23 +7,8 @@ import { Link } from "react-router-dom";
 const Services = () => {
   const serviceCategories = [
     {
-      title: "Orthopedic Physiotherapy",
-      description: "Specialized treatment for musculoskeletal issues affecting bones, joints, muscles, and soft tissues.",
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      conditions: [
-        "Back and Neck Pain",
-        "Arthritis Management",
-        "Joint Replacement Rehabilitation",
-        "Frozen Shoulder",
-        "Tennis/Golfer's Elbow",
-        "Fracture Rehabilitation",
-        "Sprains and Strains"
-      ]
-    },
-
-    {
-      title: "Sports Physiotherapy",
-      description: "Specialized care for athletes and sports enthusiasts to prevent injuries and enhance performance.",
+      title: "Sports Injury Rehabilitation",
+      description: "Treatment and prevention of injuries related to sports and exercise to enhance performance.",
       image: "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       conditions: [
         "Sports Injury Assessment",
@@ -35,11 +20,24 @@ const Services = () => {
         "Pre and Post-Event Muscle Conditioning"
       ]
     },
-
+    {
+      title: "Orthopaedic & Musculoskeletal Physiotherapy",
+      description: "Specialized treatment for muscle, bone, and joint conditions to improve mobility and reduce pain.",
+      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      conditions: [
+        "Back and Neck Pain",
+        "Arthritis Management",
+        "Joint Replacement Rehabilitation",
+        "Frozen Shoulder",
+        "Tennis/Golfer's Elbow",
+        "Fracture Rehabilitation",
+        "Sprains and Strains"
+      ]
+    },
     {
       title: "Post-Operative Rehabilitation",
-      description: "Structured recovery programs after surgical procedures to restore function and mobility.",
-      image: "https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      description: "Customized recovery programs after surgery to restore function and mobility.",
+      image: "https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       conditions: [
         "Joint Replacement Recovery",
         "Spinal Surgery Rehabilitation",
@@ -48,6 +46,34 @@ const Services = () => {
         "Hip Replacement Therapy",
         "Knee Surgery Recovery",
         "General Post-Surgical Care"
+      ]
+    },
+    {
+      title: "Post-natal Rehabilitation",
+      description: "Specialized care and exercise programs to help mothers recover and regain strength after childbirth.",
+      image: "https://images.unsplash.com/photo-1555820585-c5ae44394b79?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+      conditions: [
+        "Pelvic Floor Strengthening",
+        "Diastasis Recti Recovery",
+        "Core Muscle Re-education",
+        "Postural Correction",
+        "Back Pain Management",
+        "Safe Return to Exercise",
+        "C-Section Scar Mobilization"
+      ]
+    },
+    {
+      title: "Geriatrics Physiotherapy",
+      description: "Targeted physiotherapy for older adults to improve balance, strength, and overall quality of life.",
+      image: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+      conditions: [
+        "Balance and Fall Prevention",
+        "Osteoporosis Management",
+        "Age-Related Mobility Issues",
+        "Joint Pain and Stiffness",
+        "Post-Stroke Rehabilitation",
+        "General Deconditioning",
+        "Parkinson's Disease Support"
       ]
     }
   ];
@@ -84,7 +110,7 @@ const Services = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-clinic-primary text-white py-16">
+      <section className="bg-clinic-primary text-white pt-32 pb-16">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h1>
           <p className="text-lg max-w-3xl mx-auto opacity-90">

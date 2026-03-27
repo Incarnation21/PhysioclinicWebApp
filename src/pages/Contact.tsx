@@ -73,7 +73,7 @@ const Contact = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-clinic-primary text-white py-16">
+      <section className="bg-clinic-primary text-white pt-32 pb-16">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
           <p className="text-lg max-w-3xl mx-auto opacity-90">
@@ -103,8 +103,8 @@ const Contact = () => {
               </div>
               <h3 className="text-xl font-bold text-clinic-primary mb-2">Email</h3>
               <p className="text-gray-700 mb-2">Send us an email anytime</p>
-              <a href="mailto:contact@drriddhikaphysio.com" className="text-clinic-secondary hover:underline text-lg font-medium">
-                contact@drriddhikaphysio.com
+              <a href="mailto:drriddhikapt@gmail.com" className="text-clinic-secondary hover:underline text-lg font-medium">
+                drriddhikapt@gmail.com
               </a>
             </div>
 
@@ -226,16 +226,12 @@ const Contact = () => {
                 <div className="bg-white rounded-lg shadow-lg p-6">
                   <div className="space-y-2">
                     <div className="flex justify-between">
-                      <span className="font-medium">Monday - Friday</span>
-                      <span>9:00 AM - 8:00 PM</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Saturday</span>
-                      <span>9:00 AM - 6:00 PM</span>
+                      <span className="font-medium">Monday - Saturday</span>
+                      <span>7:00 AM - 8:00 PM</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="font-medium">Sunday</span>
-                      <span>10:00 AM - 2:00 PM</span>
+                      <span>7:00 AM - 4:00 PM</span>
                     </div>
                   </div>
                 </div>

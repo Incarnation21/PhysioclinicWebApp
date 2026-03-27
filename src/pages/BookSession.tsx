@@ -108,7 +108,7 @@ const BookSession = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-clinic-primary text-white py-16">
+      <section className="bg-clinic-primary text-white pt-32 pb-16">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Book Your Physiotherapy Session</h1>
           <p className="text-lg max-w-3xl mx-auto opacity-90">

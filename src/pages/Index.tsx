@@ -11,27 +11,36 @@ import FAQ from "@/components/FAQ";
 import { motion } from "framer-motion";
 
 const Index = () => {
-  // Sample service data
   const services = [
     {
-      title: "Orthopedic Physiotherapy",
-      description: "Specialized treatment for muscle, bone, and joint conditions to improve mobility and reduce pain.",
-      icon: <Activity size={24} />,
-      imageUrl: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-    },
-
-    {
-      title: "Sports Physiotherapy",
+      title: "Sports Injury Rehabilitation",
       description: "Treatment and prevention of injuries related to sports and exercise to enhance performance.",
       icon: <Activity size={24} />,
       imageUrl: "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
     },
-
+    {
+      title: "Orthopaedic & Musculoskeletal Physiotherapy",
+      description: "Specialized treatment for muscle, bone, and joint conditions to improve mobility and reduce pain.",
+      icon: <Activity size={24} />,
+      imageUrl: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
     {
       title: "Post-Operative Rehabilitation",
       description: "Customized recovery programs after surgery to restore function and mobility.",
       icon: <Activity size={24} />,
       imageUrl: "https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Post-natal Rehabilitation",
+      description: "Specialized care and exercise programs to help mothers recover and regain strength after childbirth.",
+      icon: <Activity size={24} />,
+      imageUrl: "https://images.unsplash.com/photo-1555820585-c5ae44394b79?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      title: "Geriatrics Physiotherapy",
+      description: "Targeted physiotherapy for older adults to improve balance, strength, and overall quality of life.",
+      icon: <Activity size={24} />,
+      imageUrl: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
     }
   ];
 
@@ -87,11 +96,11 @@ const Index = () => {
               <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
                 Restoring Health, <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-clinic-secondary to-yellow-200">
-                  Revitalizing Life
+                  Revitalizing Life...
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-gray-200 max-w-lg leading-relaxed">
-                Experience world-class physiotherapy with Dr. Riddhika. Personalized rehabilitation plans designed to help you recover faster and live better.
+                Experience World class Physiotherapy Treatment With Dr. Riddhika with personalised Rehabilitation Plans.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Button asChild size="lg" className="bg-clinic-secondary hover:bg-yellow-500 text-clinic-dark font-bold text-lg px-8 py-6 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all hover:scale-105">
@@ -154,7 +163,9 @@ const Index = () => {
                   "Personalized treatment plans",
                   "State-of-the-art equipment",
                   "Convenient scheduling options",
-                  "Doc.Door home visit services available"
+                  "Postnatal Care for Women's Health",
+                  "Post-Operative Orthopaedic Rehabilitation",
+                  "Doc.Door Home Treatment Facilities Available"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 p-4 bg-clinic-accent/30 rounded-xl border border-clinic-accent/50 hover:bg-clinic-accent/50 transition-colors">
                     <div className="h-8 w-8 rounded-full bg-clinic-secondary/20 flex items-center justify-center text-clinic-primary">
@@ -203,7 +214,7 @@ const Index = () => {
               <span className="text-clinic-primary font-semibold tracking-wider uppercase text-sm">About Us</span>
               <h2 className="text-4xl font-bold text-gray-900">World-Class Facility in Patna</h2>
               <p className="text-gray-600 text-lg leading-relaxed">
-                Dr.Riddhika's Physiotherapy Clinic is a state-of-the-art physiotherapy facility located at J-39, PC Colony, Kankarbagh, Patna, Bihar 800020, India. Our clinic is equipped with modern rehabilitation equipment to provide comprehensive care for all physiotherapy needs.
+                Dr.Riddhika's Physiotherapy Clinic is a state-of-the-art physiotherapy facility, Main Branch located at J-39, PC Colony, Kankarbagh, Patna, Bihar 800020, India. Our clinic is equipped with modern rehabilitation equipment to provide comprehensive care for all physiotherapy needs.
               </p>
               <div className="pt-4">
                 <Button asChild className="bg-clinic-primary hover:bg-clinic-dark text-white rounded-full px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all">
@@ -280,7 +291,7 @@ const Index = () => {
               link="/book-session?type=clinic"
             />
             <SessionOption
-              title="Doc.Door Home Visits"
+              title="Doc.Door Home Sessions"
               description="Our physiotherapist will visit your home with all necessary equipment for your convenience."
               icon={<User size={32} />}
               link="/book-session?type=home"
@@ -317,10 +328,10 @@ const Index = () => {
       <FAQ />
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-clinic-primary to-clinic-dark text-white relative overflow-hidden">
+      <section className="py-24 bg-clinic-primary text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
-          <h2 className="text-4xl font-bold mb-6">Ready to Start Your Recovery Journey?</h2>
+          <h2 className="text-4xl font-bold mb-6 text-white">Ready to Start Your Recovery Journey?</h2>
           <p className="text-xl mb-10 max-w-2xl mx-auto text-gray-200">
             Take the first step towards a pain-free life. Book your appointment with Dr. Riddhika today.
           </p>

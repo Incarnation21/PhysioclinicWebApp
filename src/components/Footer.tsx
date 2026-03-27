@@ -41,7 +41,7 @@ const Footer = () => {
                 <div className="bg-white/10 p-2 rounded-full text-clinic-secondary group-hover:bg-clinic-secondary group-hover:text-clinic-primary transition-colors">
                   <Mail className="h-5 w-5" />
                 </div>
-                <p className="text-gray-200 text-sm">contact@drriddhikaphysio.com</p>
+                <p className="text-gray-200 text-sm">drriddhikapt@gmail.com</p>
               </div>
             </div>
           </div>
@@ -83,16 +83,12 @@ const Footer = () => {
               </h3>
               <div className="space-y-3 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
                 <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="text-gray-300">Mon - Fri</span>
-                  <span className="font-semibold text-clinic-secondary">9:00 AM - 8:00 PM</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="text-gray-300">Saturday</span>
-                  <span className="font-semibold text-clinic-secondary">9:00 AM - 6:00 PM</span>
+                  <span className="text-gray-300">Monday - Saturday</span>
+                  <span className="font-semibold text-clinic-secondary">7:00 AM - 8:00 PM</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-300">Sunday</span>
-                  <span className="font-semibold text-clinic-secondary">10:00 AM - 2:00 PM</span>
+                  <span className="font-semibold text-clinic-secondary">7:00 AM - 4:00 PM</span>
                 </div>
               </div>
             </div>
