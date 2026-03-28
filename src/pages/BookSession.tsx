@@ -64,7 +64,7 @@ const BookSession = () => {
         body: JSON.stringify({
           patientName: formData.name,
           contactNumber: formData.phone,
-          service: sessionType === 'home' ? 'Doc.Door (Home Visit)' : 'In-Clinic Session',
+          service: sessionType === 'home' ? 'Doc.Door (Home Session)' : 'In-Clinic Session',
           appointmentDate: formData.date,
           appointmentTime: formData.time,
           notes: notesArray.join('\n')
@@ -147,7 +147,7 @@ const BookSession = () => {
                 <RadioGroupItem value="home" id="home" className="sr-only" />
                 <Label htmlFor="home" className="cursor-pointer flex flex-col items-center text-center">
                   <Home size={32} className="text-clinic-primary mb-2" />
-                  <span className="text-lg font-medium text-clinic-primary">Doc.Door (Home Visit)</span>
+                  <span className="text-lg font-medium text-clinic-primary">Doc.Door (Home Session)</span>
                   <p className="text-sm text-gray-600 mt-2">
                     Our physiotherapist will visit you at home with all necessary equipment for your convenience.
                   </p>

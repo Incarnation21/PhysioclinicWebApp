@@ -221,7 +221,7 @@ const Services = () => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-clinic-primary mb-2">Doc.Door (Home Visits)</h3>
+                <h3 className="text-xl font-bold text-clinic-primary mb-2">Doc.Door (Home Sessions)</h3>
                 <p className="text-gray-700 mb-4">
                   Our physiotherapist will come to your home with all necessary equipment for treatments in the comfort of your home.
                 </p>
