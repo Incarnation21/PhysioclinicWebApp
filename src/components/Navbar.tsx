@@ -13,9 +13,10 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Close menu when route changes
+  // Close menu and scroll to top when route changes
   useEffect(() => {
     setIsOpen(false);
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   // Handle scroll effect
@@ -38,12 +39,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
-      className={cn(
-        "fixed w-full z-50 transition-all duration-300 glass",
-        isScrolled ? "py-2" : "py-4"
-      )}
-    >
+    <>
+      <nav
+        className={cn(
+          "fixed w-full z-50 transition-all duration-300 glass",
+          isScrolled ? "py-2" : "py-4"
+        )}
+      >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
           {/* Logo */}
@@ -104,6 +106,7 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+    </nav>
 
       {/* Mobile Navigation Overlay */}
       <AnimatePresence>
@@ -113,7 +116,7 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 bg-white z-40 md:hidden flex flex-col justify-center items-center gap-8"
+            className="fixed inset-0 bg-white z-40 md:hidden flex flex-col justify-start items-center gap-8 pt-32 pb-8 overflow-y-auto"
           >
             {navLinks.map((link) => (
               <Link
@@ -136,7 +139,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 
