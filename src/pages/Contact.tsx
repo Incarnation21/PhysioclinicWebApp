@@ -8,7 +8,8 @@ import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import config from "../config";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -29,18 +30,59 @@ const Contact = () => {
     }));
   };
 
+  const validateForm = (): string | null => {
+    if (formData.name.trim().length < 2) return "Name must be at least 2 characters.";
+    if (formData.name.trim().length > 100) return "Name must be under 100 characters.";
+
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(formData.phone.trim())) return "Enter a valid 10-digit Indian mobile number.";
+
+    if (formData.subject.trim().length < 3) return "Please enter a subject.";
+    if (formData.subject.length > 200) return "Subject must be under 200 characters.";
+
+    if (formData.message.trim().length < 10) return "Message must be at least 10 characters.";
+    if (formData.message.length > 1000) return "Message must be under 1000 characters.";
+
+    return null;
+  };
+
+  const checkRateLimit = (): boolean => {
+    const key = 'contact_last_submission';
+    const lastSubmission = localStorage.getItem(key);
+    const now = Date.now();
+    if (lastSubmission && now - parseInt(lastSubmission) < 60000) return false;
+    localStorage.setItem(key, now.toString());
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const validationError = validateForm();
+    if (validationError) {
+      toast({ title: "Invalid Input", description: validationError, variant: "destructive", duration: 4000 });
+      return;
+    }
+
+    if (!checkRateLimit()) {
+      toast({ title: "Too many requests", description: "Please wait a minute before submitting again.", variant: "destructive", duration: 4000 });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await fetch(`${config.apiBaseUrl}/contacts`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      const docRef = await addDoc(collection(db, "contacts"), {
+        ...formData,
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+        status: "Unread",
+        createdAt: new Date().toISOString()
       });
 
-      if (response.ok) {
+      if (docRef.id) {
         toast({
           title: "Message Sent",
           description: "Thank you for contacting us. We'll get back to you soon.",
