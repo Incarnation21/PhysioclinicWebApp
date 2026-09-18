@@ -98,8 +98,8 @@ src/
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-username/physioclinic-webapp.git
-cd physioclinic-webapp
+git clone https://github.com/Incarnation21/PhysioclinicWebApp.git
+cd PhysioclinicWebApp
 
 # 2. Install dependencies
 npm install
