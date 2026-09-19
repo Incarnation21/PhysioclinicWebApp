@@ -27,8 +27,9 @@ const AdminLogin = () => {
         toast({ title: "Login Successful", duration: 3000 });
         navigate("/admin/dashboard");
       }
-    } catch (error: any) {
-      toast({ title: "Login Failed", description: error.message || "Invalid credentials", variant: "destructive", duration: 3000 });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Invalid credentials";
+      toast({ title: "Login Failed", description: message, variant: "destructive", duration: 3000 });
     } finally {
       setLoading(false);
     }

@@ -120,7 +120,7 @@ const Index = () => {
             >
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10 bg-white/5 backdrop-blur-sm transform rotate-y-12 transition-transform duration-500 hover:rotate-0">
                 <img
-                  src="/lovable-uploads/7cd4e83a-2083-4a21-847d-a34695d3827d.png"
+                  src="/uploads/7cd4e83a-2083-4a21-847d-a34695d3827d.png"
                   alt="Physiotherapy Session"
                   className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
                 />

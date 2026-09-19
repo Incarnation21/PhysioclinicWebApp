@@ -66,7 +66,7 @@ const About = () => {
             </div>
             <div className="order-1 md:order-2">
               <img
-                src="/lovable-uploads/e156839d-22eb-42f6-9555-b8871c8d7aa8.png"
+                src="/uploads/e156839d-22eb-42f6-9555-b8871c8d7aa8.png"
                 alt="Dr. Laxmi Riddhika"
                 className="rounded-lg shadow-lg"
               />

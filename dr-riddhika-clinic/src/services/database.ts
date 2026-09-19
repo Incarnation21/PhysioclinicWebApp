@@ -28,7 +28,7 @@ export const disconnect = async () => {
   }
 };
 
-export const query = async (text: string, params?: any[]) => {
+export const query = async (text: string, params?: unknown[]) => {
   try {
     const res = await pool.query(text, params);
     return res;

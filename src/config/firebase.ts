@@ -4,13 +4,13 @@ import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA52JczCuQIXrhsjtzJjNbhN1mqPa2jtb8",
-  authDomain: "docdoor-cc3b8.firebaseapp.com",
-  projectId: "docdoor-cc3b8",
-  storageBucket: "docdoor-cc3b8.firebasestorage.app",
-  messagingSenderId: "533370431065",
-  appId: "1:533370431065:web:37e739710a40043279b348",
-  measurementId: "G-WQ4685PXN0"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

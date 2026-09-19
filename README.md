@@ -3,8 +3,15 @@
 </h1>
 
 <p align="center">
-  <b>A full-stack clinic management & patient booking platform — built for a real operational physiotherapy clinic</b><br/>
+  <b>A full-stack clinic management &amp; patient booking platform — built for a real operational physiotherapy clinic</b><br/>
   <i>React · TypeScript · Firebase · Tailwind CSS · Framer Motion</i>
+</p>
+
+<p align="center">
+  <a href="https://docdoor.co.in/" target="_blank">
+    <img src="https://img.shields.io/badge/🌐_Live_Demo-docdoor.co.in-0D9488?style=for-the-badge&logoColor=white"/>
+  </a>
+  <img src="https://img.shields.io/github/actions/workflow/status/Incarnation21/PhysioclinicWebApp/lint.yml?style=for-the-badge&label=CI%20Lint&logo=githubactions&logoColor=white"/>
 </p>
 
 <p align="center">
@@ -18,11 +25,31 @@
 
 ---
 
+## 🌐 Live Site
+
+**[→ https://docdoor.co.in/](https://docdoor.co.in/)**
+
+> The application is live and actively used by the clinic for real patient bookings and appointment management.
+
+---
+
 ## 🌟 What is this?
 
 A **production-ready, full-stack web application** for a physiotherapy clinic that handles everything from patient-facing appointment booking to a secure admin dashboard — all in one seamless, responsive experience.
 
-> Built as a real-world project for an **actual operational clinic** — not a tutorial clone.
+> Built as a real-world freelance project for an **actual operational clinic** — not a tutorial clone.
+
+---
+
+## 📸 Screenshots
+
+| 🏠 Home Page | 📅 Appointment Booking |
+|---|---|
+| ![Home Page](.github/screenshots/01-home.png) | ![Booking Page](.github/screenshots/02-booking.png) |
+
+| 🔐 Admin Dashboard | 📱 Mobile Responsive |
+|---|---|
+| ![Admin Dashboard](.github/screenshots/03-admin.png) | ![Mobile View](.github/screenshots/04-mobile.png) |
 
 ---
 
@@ -82,7 +109,7 @@ src/
 │   ├── WhatsAppButton.tsx  # Floating WhatsApp CTA
 │   └── ui/                 # shadcn/ui component library
 ├── config/
-│   └── firebase.ts         # Firebase SDK initialisation
+│   └── firebase.ts         # Firebase SDK initialisation (env-var based)
 └── hooks/                  # Custom React hooks
 ```
 
@@ -105,7 +132,7 @@ cd PhysioclinicWebApp
 npm install
 
 # 3. Configure environment variables
-cp .env.production.example .env.local
+cp .env.local.example .env.local
 # Fill in your Firebase config keys in .env.local
 
 # 4. Start the dev server
@@ -114,6 +141,8 @@ npm run dev
 
 ### Environment Variables
 
+Copy `.env.local.example` to `.env.local` and fill in your Firebase project credentials:
+
 ```env
 VITE_FIREBASE_API_KEY=...
 VITE_FIREBASE_AUTH_DOMAIN=...
@@ -121,7 +150,11 @@ VITE_FIREBASE_PROJECT_ID=...
 VITE_FIREBASE_STORAGE_BUCKET=...
 VITE_FIREBASE_MESSAGING_SENDER_ID=...
 VITE_FIREBASE_APP_ID=...
+VITE_FIREBASE_MEASUREMENT_ID=...
+VITE_API_URL=https://your-backend.onrender.com/api
 ```
+
+> **Note:** Firebase Web API keys are designed to be project identifiers, not secrets. Access control is enforced via Firestore Security Rules (see [`firestore.rules`](./firestore.rules)).
 
 ---
 
@@ -165,8 +198,8 @@ VITE_FIREBASE_APP_ID=...
 
 - Firestore security rules enforce role-based read/write access
 - Admin routes guarded by Firebase Auth state observer
+- All Firebase credentials managed via **environment variables** — never hardcoded
 - All form inputs sanitized and validated before any Firestore write
-- API keys managed via environment variables — never hardcoded
 - `.env` files excluded via `.gitignore`
 
 ---
@@ -198,12 +231,26 @@ VITE_FIREBASE_APP_ID=...
 
 ---
 
+## 🛠️ Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build locally
+npm run lint         # Run ESLint
+npm run type-check   # Run TypeScript compiler check (no emit)
+```
+
+---
+
 ## 👨‍💻 About this Project
 
-This is a **real-world freelance/client project** built for an operational physiotherapy clinic in Patna, Bihar. It solves genuine business problems — reducing manual phone bookings, giving the doctor a clean dashboard to manage patients, and automating appointment confirmation messages via WhatsApp.
+This is a **real-world freelance project** built for an operational physiotherapy clinic in Patna, Bihar. It solves genuine business problems — reducing manual phone bookings, giving the doctor a clean dashboard to manage patients, and automating appointment confirmation messages via WhatsApp.
+
+**Built & maintained by [Krish](https://github.com/Incarnation21)**
 
 ---
 
 ## 📄 License
 
-This project is private and built for a specific client. Not licensed for public reuse.
+This project is built for a specific client and is made public for **portfolio purposes only**. Not licensed for public reuse or redistribution.
