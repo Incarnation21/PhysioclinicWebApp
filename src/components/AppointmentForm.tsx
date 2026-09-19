@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import config from "../config";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,25 +29,19 @@ const AppointmentForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      const response = await fetch(`${config.apiBaseUrl}/appointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          patientName: formData.name,
-          contactNumber: formData.phone,
-          appointmentDate: formData.date,
-          // Extract time or default
-          appointmentTime: "10:00 AM",
-          service: "General Consultation",
-          notes: formData.message,
-        }),
+      const docRef = await addDoc(collection(db, "appointments"), {
+        patientName: formData.name,
+        contactNumber: formData.phone,
+        appointmentDate: formData.date,
+        appointmentTime: "10:00 AM",
+        service: "General Consultation",
+        notes: formData.message,
+        status: "Pending",
+        createdAt: new Date().toISOString()
       });
 
-      if (response.ok) {
+      if (docRef.id) {
         toast({
           title: "Appointment Request Sent",
           description: "We have received your request and will contact you shortly.",

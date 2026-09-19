@@ -52,7 +52,7 @@ const About = () => {
             <div className="order-2 md:order-1 space-y-4">
               <h2 className="text-3xl font-bold text-clinic-primary">Meet Dr. Laxmi Riddhika</h2>
               <p className="text-gray-700">
-                Dr. Laxmi Riddhika is a highly qualified and experienced physiotherapist with expertise in various rehabilitation techniques and methodologies. She completed her Master of Physiotherapy (MPT) from ABMU and Bachelor of Physiotherapy (BPT) from CCSU.
+                Dr. Laxmi Riddhika is a highly qualified and experienced physiotherapist with expertise in various rehabilitation techniques and methodologies. She completed her Master of Physiotherapy (MPT) in Sports, and brings valuable experience from her tenure at AIIMS Patna, alongside the distinction of representing Team India at the 2025 World Cup.
               </p>
               <p className="text-gray-700">
                 With years of clinical experience, Dr. Riddhika specializes in treating a wide range of conditions including musculoskeletal disorders, neurological conditions, sports injuries, cardiopulmonary issues, and post-surgical rehabilitation.
@@ -66,7 +66,7 @@ const About = () => {
             </div>
             <div className="order-1 md:order-2">
               <img
-                src="/lovable-uploads/e156839d-22eb-42f6-9555-b8871c8d7aa8.png"
+                src="/uploads/e156839d-22eb-42f6-9555-b8871c8d7aa8.png"
                 alt="Dr. Laxmi Riddhika"
                 className="rounded-lg shadow-lg"
               />

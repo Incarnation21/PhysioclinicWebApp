@@ -1,5 +1,6 @@
 import { useState } from "react";
-import config from "../config";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +10,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const AdminLogin = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -20,25 +21,15 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${config.apiBaseUrl}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("adminToken", data.token);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      if (userCredential.user) {
+        localStorage.setItem("adminToken", userCredential.user.uid);
         toast({ title: "Login Successful", duration: 3000 });
         navigate("/admin/dashboard");
-      } else {
-        toast({ title: "Login Failed", description: data.msg || "Invalid credentials", variant: "destructive", duration: 3000 });
       }
     } catch (error) {
-      toast({ title: "Error", description: "Could not connect to server", variant: "destructive", duration: 3000 });
+      const message = error instanceof Error ? error.message : "Invalid credentials";
+      toast({ title: "Login Failed", description: message, variant: "destructive", duration: 3000 });
     } finally {
       setLoading(false);
     }
@@ -55,12 +46,13 @@ const AdminLogin = () => {
           </div>
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="email">Email address</Label>
               <Input
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter admin username"
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter admin email"
                 required
               />
             </div>

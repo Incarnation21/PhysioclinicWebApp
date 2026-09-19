@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
-import { LogOut, Calendar, Phone, FileText, Mail, MessageSquare } from "lucide-react";
-import config from "../config";
+import { LogOut, Calendar, Phone, FileText, Mail, MessageSquare, Send } from "lucide-react";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { db, auth } from "../config/firebase";
 
 interface Appointment {
   _id: string;
@@ -39,30 +41,32 @@ const AdminDashboard = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    const token = localStorage.getItem("adminToken");
-    if (!token) {
-      navigate("/admin");
-      return;
-    }
-    
-    if (activeTab === 'appointments') {
-      fetchAppointments(token);
-    } else {
-      fetchContacts(token);
-    }
-  }, [activeTab]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/admin");
+      } else {
+        if (activeTab === 'appointments') {
+          fetchAppointments();
+        } else {
+          fetchContacts();
+        }
+      }
+    });
 
-  const fetchAppointments = async (token: string) => {
+    return () => unsubscribe();
+  }, [activeTab, navigate]);
+
+  const fetchAppointments = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${config.apiBaseUrl}/appointments`, {
-        headers: { "x-auth-token": token },
-      });
-      if (response.ok) {
-        setAppointments(await response.json());
-      } else if (response.status === 401) {
-        handleLogout();
-      }
+      const querySnapshot = await getDocs(collection(db, "appointments"));
+      const apts: Appointment[] = querySnapshot.docs.map(doc => ({
+        _id: doc.id,
+        ...doc.data()
+      } as Appointment));
+      // Sort by descending createdAt
+      apts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      setAppointments(apts);
     } catch (error) {
       toast({ title: "Error loading appointments", variant: "destructive" });
     } finally {
@@ -70,17 +74,17 @@ const AdminDashboard = () => {
     }
   };
 
-  const fetchContacts = async (token: string) => {
+  const fetchContacts = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${config.apiBaseUrl}/contacts`, {
-        headers: { "x-auth-token": token },
-      });
-      if (response.ok) {
-        setContacts(await response.json());
-      } else if (response.status === 401) {
-        handleLogout();
-      }
+      const querySnapshot = await getDocs(collection(db, "contacts"));
+      const msgs: ContactMessage[] = querySnapshot.docs.map(doc => ({
+        _id: doc.id,
+        ...doc.data()
+      } as ContactMessage));
+      // Sort by descending createdAt
+      msgs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      setContacts(msgs);
     } catch (error) {
       toast({ title: "Error loading messages", variant: "destructive" });
     } finally {
@@ -88,8 +92,9 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem("adminToken");
+    await signOut(auth);
     navigate("/admin");
   };
 
@@ -101,25 +106,62 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleUpdateAppointment = async (id: string, updates: Partial<Appointment>) => {
-    const token = localStorage.getItem("adminToken");
-    try {
-      const response = await fetch(`${config.apiBaseUrl}/appointments/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": token || "",
-        },
-        body: JSON.stringify(updates),
-      });
+  const sendWhatsAppConfirmation = (apt: Appointment) => {
+    // Sanitize phone: strip non-digits, add India country code
+    const digits = apt.contactNumber.trim().replace(/\D/g, '');
+    const formattedPhone = digits.startsWith('91') ? digits : `91${digits}`;
 
-      if (response.ok) {
-        const updatedApt = await response.json();
-        setAppointments((prev) => prev.map(apt => apt._id === id ? updatedApt : apt));
-        toast({ title: "Appointment updated successfully!" });
-      } else {
-        throw new Error("Failed to update");
-      }
+    const isHomeSession = apt.service.toLowerCase().includes('home') || apt.service.toLowerCase().includes('doc.door');
+
+    // Try to extract address from notes for home sessions
+    const addressMatch = apt.notes?.match(/Address:\s*(.+?)(\n|$)/);
+    const address = addressMatch ? addressMatch[1].trim() : '';
+
+    const message = isHomeSession
+      ? `Dear ${apt.patientName},
+
+We are pleased to confirm your *Doc.Door Home Visit* appointment at Dr. Riddhika's Physiotherapy Clinic.
+
+Date: ${formatDate(apt.appointmentDate)}
+Time: ${apt.appointmentTime}${apt.assignedTo ? `
+Physiotherapist: ${apt.assignedTo}` : ''}${address ? `
+Visit Address: ${address}` : ''}
+
+Our physiotherapist will arrive at your residence at the scheduled time. We kindly request that a responsible adult be present to receive them. Please have any relevant medical reports, prescriptions, or prior diagnostic records readily available.
+
+Should you have any questions or require assistance, please do not hesitate to contact us at 8252482702.
+
+Warm regards,
+*Dr. Riddhika's Physiotherapy Clinic*
+J-39, PC Colony, Kankarbagh, Patna, Bihar 800020`
+
+      : `Dear ${apt.patientName},
+
+We are pleased to confirm your physiotherapy appointment at *Dr. Riddhika's Physiotherapy Clinic*.
+
+Date: ${formatDate(apt.appointmentDate)}
+Time: ${apt.appointmentTime}
+Service: ${apt.service}${apt.assignedTo ? `
+Physiotherapist: ${apt.assignedTo}` : ''}
+
+We kindly request you to arrive 5 minutes prior to your scheduled time. Please carry any relevant medical reports, prescriptions, or prior diagnostic records for reference.
+
+Should you have any questions or require assistance, please do not hesitate to contact us at 8252482702.
+
+Warm regards,
+*Dr. Riddhika's Physiotherapy Clinic*
+J-39, PC Colony, Kankarbagh, Patna, Bihar 800020`;
+
+    window.open(`https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  const handleUpdateAppointment = async (id: string, updates: Partial<Appointment>) => {
+    try {
+      const docRef = doc(db, "appointments", id);
+      await updateDoc(docRef, updates);
+      
+      setAppointments((prev) => prev.map(apt => apt._id === id ? { ...apt, ...updates } : apt));
+      toast({ title: "Appointment updated successfully!" });
     } catch (error) {
       toast({ title: "Failed to update appointment", variant: "destructive" });
     }
@@ -223,6 +265,15 @@ const AdminDashboard = () => {
                           className="w-full text-sm border-gray-200 rounded-lg p-2.5 focus:border-clinic-secondary focus:ring-1 focus:ring-clinic-secondary bg-white shadow-sm transition-all"
                         />
                       </div>
+                      {apt.status === 'Confirmed' && (
+                        <button
+                          onClick={() => sendWhatsAppConfirmation(apt)}
+                          className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all shadow-sm mt-1"
+                        >
+                          <Send className="w-4 h-4" />
+                          Send WhatsApp Confirmation
+                        </button>
+                      )}
                     </div>
                   </div>
                   {apt.notes && (

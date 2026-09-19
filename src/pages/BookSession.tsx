@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
-import config from "../config";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,8 +49,51 @@ const BookSession = () => {
     }));
   };
 
+  const validateForm = (): string | null => {
+    if (formData.name.trim().length < 2) return "Name must be at least 2 characters.";
+    if (formData.name.trim().length > 100) return "Name must be under 100 characters.";
+
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(formData.phone.trim())) return "Enter a valid 10-digit Indian mobile number.";
+
+    if (formData.date) {
+      const selectedDate = new Date(formData.date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate < today) return "Please select today's date or a future date.";
+    }
+
+    if (formData.condition.length > 300) return "Condition description must be under 300 characters.";
+    if (formData.message.length > 500) return "Additional information must be under 500 characters.";
+    if (sessionType === 'home' && formData.address.trim().length < 10) return "Please enter a complete address for the home visit.";
+    if (formData.address.length > 300) return "Address must be under 300 characters.";
+
+    return null;
+  };
+
+  const checkRateLimit = (): boolean => {
+    const key = 'booking_last_submission';
+    const lastSubmission = localStorage.getItem(key);
+    const now = Date.now();
+    if (lastSubmission && now - parseInt(lastSubmission) < 60000) return false;
+    localStorage.setItem(key, now.toString());
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const validationError = validateForm();
+    if (validationError) {
+      toast({ title: "Invalid Input", description: validationError, variant: "destructive", duration: 4000 });
+      return;
+    }
+
+    if (!checkRateLimit()) {
+      toast({ title: "Too many requests", description: "Please wait a minute before submitting again.", variant: "destructive", duration: 4000 });
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -57,27 +101,26 @@ const BookSession = () => {
       if (formData.condition) notesArray.push(`Condition: ${formData.condition}`);
       if (formData.address) notesArray.push(`Address: ${formData.address}`);
       if (formData.message) notesArray.push(`Message: ${formData.message}`);
-      
-      const response = await fetch(`${config.apiBaseUrl}/appointments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          patientName: formData.name,
-          contactNumber: formData.phone,
-          service: sessionType === 'home' ? 'Doc.Door (Home Session)' : 'In-Clinic Session',
-          appointmentDate: formData.date,
-          appointmentTime: formData.time,
-          notes: notesArray.join('\n')
-        }),
+
+      const docRef = await addDoc(collection(db, "appointments"), {
+        patientName: formData.name,
+        contactNumber: formData.phone,
+        email: formData.email,
+        service: sessionType === 'home' ? 'Doc.Door (Home Session)' : 'In-Clinic Session',
+        appointmentDate: formData.date,
+        appointmentTime: formData.time,
+        notes: notesArray.join('\n'),
+        status: "Pending",
+        createdAt: new Date().toISOString(),
       });
 
-      if (response.ok) {
+      if (docRef.id) {
         toast({
           title: "Booking Request Received",
           description: "We'll contact you shortly to confirm your appointment.",
           duration: 5000,
         });
-        
+
         setFormData({
           name: "",
           phone: "",
